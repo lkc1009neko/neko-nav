@@ -12,6 +12,9 @@
   --color-text-muted: #898989;
   --color-border: #2a2a3a;
   --font-display: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --animate-loading-fade: loading-fade 0.8s ease 0.7s forwards;
+  --animate-dot-bounce: dot-bounce 1s ease-in-out infinite;
+  --animate-main-fade-in: main-fade-in 0.8s ease 0.7s both;
 }
 
 * { box-sizing: border-box; }
@@ -100,3 +103,8 @@ body {
 
 .float-glow { animation: float-glow 8s ease-in-out infinite; }
 .float-glow-delayed { animation: float-glow 10s ease-in-out 2s infinite; }
+
+@keyframes main-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

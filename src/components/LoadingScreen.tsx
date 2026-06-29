@@ -1,28 +1,23 @@
 import { useEffect, useState } from 'react'
 
-interface Props {
-  onDone?: () => void
-}
-
-export default function LoadingScreen({ onDone }: Props) {
-  const [visible, setVisible] = useState(true)
+export default function LoadingScreen() {
+  const [phase, setPhase] = useState<'show' | 'fade' | 'hidden'>('show')
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false)
-      onDone?.()
-    }, 1500)
-    return () => clearTimeout(timer)
-  }, [onDone])
+    const fadeTimer = setTimeout(() => setPhase('fade'), 700)
+    const hideTimer = setTimeout(() => setPhase('hidden'), 1500)
+    return () => { clearTimeout(fadeTimer); clearTimeout(hideTimer) }
+  }, [])
 
-  if (!visible) return null
+  if (phase === 'hidden') return null
 
   return (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{
         background: '#0a0a0f',
-        animation: 'loading-fade 0.8s ease 0.7s forwards',
+        opacity: phase === 'fade' ? 0 : 1,
+        transition: 'opacity 0.8s ease',
       }}
     >
       <div className="text-center">
@@ -32,10 +27,8 @@ export default function LoadingScreen({ onDone }: Props) {
           {[0, 1, 2, 3].map(i => (
             <div
               key={i}
-              className="w-1.5 h-1.5 rounded-full bg-accent"
-              style={{
-                animation: `dot-bounce 1s ease-in-out ${i * 0.15}s infinite`,
-              }}
+              className="w-1.5 h-1.5 rounded-full bg-accent animate-dot-bounce"
+              style={{ animationDelay: `${i * 0.15}s` }}
             />
           ))}
         </div>

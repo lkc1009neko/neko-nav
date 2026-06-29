@@ -15,7 +15,6 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
   const [activeSubCategory, setActiveSubCategory] = useState<string | null>(null)
-  const [loadingDone, setLoadingDone] = useState(false)
 
   const { authed, loading: authLoading, login, logout } = useAuth()
 
@@ -46,15 +45,11 @@ export default function App() {
 
   return (
     <>
-      <LoadingScreen onDone={() => setLoadingDone(true)} />
+      <LoadingScreen />
       <BgVideo />
 
       <div
-        className="relative z-10 flex h-screen overflow-hidden"
-        style={{
-          opacity: loadingDone ? 1 : 0,
-          transition: 'opacity 0.6s ease',
-        }}
+        className="relative z-10 flex h-screen overflow-hidden animate-main-fade-in"
       >
         <Sidebar
           categories={categories}
